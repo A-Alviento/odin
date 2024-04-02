@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Foundations Problem Solving Assignment</title>
+  </head>
+
+  <body>
+    <script>
+      let answer = parseInt(prompt("Please enter the number you want: "));
+
+      for (let i = 1; i <= answer; i++) {
+        i % 15 === 0
+          ? console.log("FizzBuzz")
+          : i % 3 === 0
+          ? console.log("Fizz")
+          : i % 5 === 0
+          ? console.log("Buzz")
+          : console.log(i);
+      }
+    </script>
+  </body>
+</html>
