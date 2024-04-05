@@ -55,7 +55,7 @@ const playGame = () => {
   let compSelection = "";
 
   let bestOf = 5;
-  let scoreThreshold = Math.ceil(bestOf/2)
+  let scoreThreshold = Math.ceil(bestOf / 2);
 
   while (true) {
     playerSelection = prompt("Enter selection (rock, paper, scissors): ");
@@ -87,3 +87,8 @@ const playGame = () => {
 };
 
 playGame();
+
+for (i = 0; i < 5; i++) {
+  console.log("Game " + i);
+  playGame();
+}
