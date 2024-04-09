@@ -36,7 +36,7 @@ const playRound = (playerSelection, compSelection) => {
       break;
   }
 
-  if (tie) return { resultMessage: "It's a tie!", result: "tie" };
+  if (tie) return "tie";
 
   resultMessage =
     "You " +
@@ -45,50 +45,29 @@ const playRound = (playerSelection, compSelection) => {
       : "lose, " + compSelection + " beats " + playerSelection + "!");
   result = win ? "playerWin" : "compWin";
 
-  return { resultMessage, result };
+  return result;
 };
 
-const playGame = () => {
-  let playerScore = 0;
-  let compScore = 0;
-  let playerSelection = "";
-  let compSelection = "";
+const btnContainer = document.querySelector("#btnContainer");
+let playerSelection = "";
+let playerScore = 0;
+let compScore = 0;
 
-  let bestOf = 5;
-  let scoreThreshold = Math.ceil(bestOf / 2);
+btnContainer.addEventListener("click", (event) => {
+  let target = event.target;
 
-  while (true) {
-    playerSelection = prompt("Enter selection (rock, paper, scissors): ");
-    playerSelection = playerSelection.toLowerCase();
-
-    while (!rockPaperScissor.includes(playerSelection)) {
-      playerSelection = prompt(
-        "Wrong Input, only enter from the following choices (rock, paper, scissors): "
-      );
-      playerSelection = playerSelection.toLowerCase();
-    }
-
-    compSelection = getComputerChoice();
-    ({ resultMessage, result } = playRound(playerSelection, compSelection));
-    console.log(resultMessage);
-
-    result === "playerWin"
-      ? playerScore++
-      : result === "compWin"
-      ? compScore++
-      : null;
-
-    console.log("You: " + playerScore + "\nCpu: " + compScore);
-
-    if (playerScore >= scoreThreshold || compScore >= scoreThreshold) break;
+  switch (target.id) {
+    case "scissorBtn":
+      playerSelection = "scissors";
+      break;
+    case "paperButton":
+      playerSelection = "paper";
+      break;
+    case "rockButton":
+      playerSelection = "rock";
+      break;
   }
 
-  playerScore > compScore ? alert("You win!") : alert("You lose!");
-};
-
-playGame();
-
-for (i = 0; i < 5; i++) {
-  console.log("Game " + i);
-  playGame();
-}
+  result = playRound(playerSelection, getComputerChoice());
+  result === "playerWin" ? playerScore++ : compScore++;
+});
