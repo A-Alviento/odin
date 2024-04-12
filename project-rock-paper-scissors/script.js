@@ -1,9 +1,10 @@
-const rockPaperScissor = ["rock", "paper", "scissors"];
+const SELECTION = ["rock", "paper", "scissors"];
+const WINNING_SCORE = 5;
 
 const getComputerChoice = () => {
   const compSelection = Math.floor(Math.random() * 3);
 
-  return rockPaperScissor[compSelection];
+  return SELECTION[compSelection];
 };
 
 const playRound = (playerSelection, compSelection) => {
@@ -49,9 +50,19 @@ const playRound = (playerSelection, compSelection) => {
 };
 
 const btnContainer = document.querySelector("#btnContainer");
+const scoreContainer = document.querySelector("#scoreContainer");
+
 let playerSelection = "";
 let playerScore = 0;
 let compScore = 0;
+
+const playerScoreText = document.createElement("span");
+playerScoreText.textContent = "Player: " + playerScore;
+const compScoreText = document.createElement("span");
+compScoreText.textContent = "Computer: " + compScore;
+
+scoreContainer.appendChild(playerScoreText);
+scoreContainer.appendChild(compScoreText);
 
 btnContainer.addEventListener("click", (event) => {
   let target = event.target;
@@ -60,14 +71,26 @@ btnContainer.addEventListener("click", (event) => {
     case "scissorBtn":
       playerSelection = "scissors";
       break;
-    case "paperButton":
+    case "paperBtn":
       playerSelection = "paper";
       break;
-    case "rockButton":
+    case "rockBtn":
       playerSelection = "rock";
       break;
+    default:
+      return;
   }
 
   result = playRound(playerSelection, getComputerChoice());
   result === "playerWin" ? playerScore++ : compScore++;
+  playerScoreText.textContent = "Player: " + playerScore;
+  compScoreText.textContent = "Computer: " + compScore;
+
+  if (playerScore === 5 || compScore === 5) {
+    playerScore === 5 ? alert("You win!!!") : alert("You lose!");
+    playerScore = 0;
+    compScore = 0;
+    playerScoreText.textContent = "Player: " + playerScore;
+    compScoreText.textContent = "Computer: " + compScore;
+  }
 });
