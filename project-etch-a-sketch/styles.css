@@ -1,0 +1,22 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 50%;
+  height: 50%;
+}
+
+#container {
+  display: flex;
+  border: 1px solid red;
+  flex-wrap: wrap;
+}
+
+.div {
+  width: 0.78125%;
+  height: 0;
+  margin: 0;
+  padding: 0;
+  padding-bottom: 0.78125%;
+  /* border: 1px solid black; */
+}
