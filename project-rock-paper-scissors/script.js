@@ -1,5 +1,10 @@
 const SELECTION = ["rock", "paper", "scissors"];
 const WINNING_SCORE = 5;
+const SELECTION_IMG = {
+  rock: "./assets/rock.svg",
+  paper: "./assets/paper.svg",
+  scissors: "./assets/scissors.svg",
+};
 
 const getComputerChoice = () => {
   const compSelection = Math.floor(Math.random() * 3);
@@ -51,8 +56,12 @@ const playRound = (playerSelection, compSelection) => {
 
 const btnContainer = document.querySelector("#btnContainer");
 const scoreContainer = document.querySelector("#scoreContainer");
+const playerImg = document.querySelector("#playerSelectionImg");
+const cpuImg = document.querySelector("#cpuSelectionImg");
 
 let playerSelection = "";
+let cpuSelection = "";
+let result = "";
 let playerScore = 0;
 let compScore = 0;
 
@@ -80,17 +89,29 @@ btnContainer.addEventListener("click", (event) => {
     default:
       return;
   }
+  cpuSelection = getComputerChoice();
 
-  result = playRound(playerSelection, getComputerChoice());
-  result === "playerWin" ? playerScore++ : compScore++;
+  playerImg.setAttribute("src", SELECTION_IMG[playerSelection]);
+  cpuImg.setAttribute("src", SELECTION_IMG[cpuSelection]);
+
+  result = playRound(playerSelection, cpuSelection);
+  result === "playerWin"
+    ? playerScore++
+    : result === "compWin"
+    ? compScore++
+    : null;
   playerScoreText.textContent = "Player: " + playerScore;
   compScoreText.textContent = "Computer: " + compScore;
 
   if (playerScore === 5 || compScore === 5) {
-    playerScore === 5 ? alert("You win!!!") : alert("You lose!");
-    playerScore = 0;
-    compScore = 0;
-    playerScoreText.textContent = "Player: " + playerScore;
-    compScoreText.textContent = "Computer: " + compScore;
+    setTimeout(() => {
+      playerScore === 5 ? alert("You win!!!") : alert("You lose!");
+      playerScore = 0;
+      compScore = 0;
+      playerScoreText.textContent = "Player: " + playerScore;
+      compScoreText.textContent = "Computer: " + compScore;
+      playerImg.setAttribute("src", "./assets/placeholder.svg");
+      cpuImg.setAttribute("src", "./assets/placeholder.svg");
+    });
   }
 });

@@ -10,8 +10,23 @@ body {
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  /* border: 1px solid red; */
+  padding: 0;
+  margin: 0;
+}
+
+#imgContainer {
+  display: flex;
+  justify-content: space-around;
+  /* border: 1px solid blue; */
+  width: 100%;
+}
+
+img {
+  width: 200px;
+  height: 200px;
+  margin: 32px;
 }
 
 #scoreContainer {
@@ -19,6 +34,7 @@ body {
   width: 100%;
   justify-content: space-around;
   margin: 32px;
+  /* border: 1px solid black; */
 }
 
 span {
@@ -30,9 +46,23 @@ span {
   display: flex;
   width: 100%;
   justify-content: space-around;
+  /* border: 1px solid purple; */
 }
 
 button {
   padding: 32px;
   border-radius: 8px;
+}
+
+#title {
+  width: 100%;
+  background-color: black;
+  margin: 0;
+}
+
+h1 {
+  text-align: center;
+  font-size: 48px;
+  margin: 32px;
+  color: white
 }
