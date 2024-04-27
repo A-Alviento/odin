@@ -157,6 +157,8 @@ const isAnOperator = (char) => {
 }
 
 buttons.forEach((btn) => {
+  if (isAnOperator(btn.textContent) || btn.textContent === '=') btn.style.backgroundColor = '#DB5461'
+  if (btn.textContent === 'AC' || btn.textContent === 'C') btn.style.backgroundColor = '#8AA29E'
   btn.addEventListener('click', () => {
     switch (btn.textContent) {
       case ('C'):
@@ -170,10 +172,15 @@ buttons.forEach((btn) => {
         isResultPresent = false
         break
       case ('='):
+        if (isAnOperator(input.value[input.value.length - 2])) return
         let processedInput = input.value.replace(/x/g, '*')
         processedInput = processedInput.replace(/ans/g, currentResult)
         currentResult = evaluatePostfix(infixToPostfix(processExpression(processedInput)))
         if (!currentResult) return ``
+        if (currentResult === Infinity) {
+          resultField.textContent = 'Error: Cannot divide by 0!'
+          return
+        }
         resultField.textContent = currentResult
         isResultPresent = true
         break;
@@ -192,7 +199,7 @@ buttons.forEach((btn) => {
               input.value = "ans"
               isResultPresent = false
             }
-            if (isAnOperator(input.value[input.value.length - 1])) return
+            if (isAnOperator(input.value[input.value.length - 2])) return;
             if (input.value.length == 0) return;
         }
         if (isAnOperator(btn.textContent)) {
