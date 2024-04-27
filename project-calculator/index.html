@@ -1,20 +1,25 @@
 <!DOCTYPE html>
 
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="utf-8" />
     <title>Project Calculator</title>
     <link rel="stylesheet" href="styles.css" />
-  </head>
+    <script src="./script.js" defer></script>
+</head>
 
-  <body>
+<body>
     <div id="container">
-        <div id="screen"></div>
+        <div id="screen">
+            <input id="input" type="text">
+            <div id="result"></div>
+        </div>
         <div id="buttons">
             <button id="button">(</button>
             <button id="button">)</button>
-            <button id="button">%</button>
             <button id="button">AC</button>
+            <button id="button">C</button>
 
             <button id="button">7</button>
             <button id="button">8</button>
@@ -37,5 +42,6 @@
             <button id="button">=</button>
         </div>
     </div>
-  </body>
+</body>
+
 </html>

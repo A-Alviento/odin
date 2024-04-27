@@ -31,7 +31,7 @@ const operator = (firstNum, secondNum, operator) => {
 };
 
 const isNumeric = (str) => {
-  return !isNaN(str);
+  return (!isNaN(str) || str === '.');
 };
 
 const processExpression = (str) => {
@@ -133,3 +133,73 @@ const evaluatePostfix = (arr) => {
 
 // evaluatePostfix(infixToPostfix(processExpression("3+4*2/(1-5)")));
 console.log(evaluatePostfix(infixToPostfix(processExpression(""))));
+
+
+// input logic
+const input = document.querySelector('#input')
+
+// button logic
+const buttons = document.querySelectorAll('#button')
+const resultField = document.querySelector('#result')
+let isResultPresent = false
+let currentResult = ''
+
+const isAnOperator = (char) => {
+  switch (char) {
+    case '+':
+    case '-':
+    case '/':
+    case 'x':
+      return true
+    default:
+      return false
+  }
+}
+
+buttons.forEach((btn) => {
+  btn.addEventListener('click', () => {
+    switch (btn.textContent) {
+      case ('C'):
+        input.value = ''
+        resultField.textContent = ''
+        isResultPresent = false
+        break
+      case ('AC'):
+        if (input.value[input.value.length - 1] === 's') input.value = input.value.slice(0, -3);
+        input.value = input.value.slice(0, -1);
+        isResultPresent = false
+        break
+      case ('='):
+        let processedInput = input.value.replace(/x/g, '*')
+        processedInput = processedInput.replace(/ans/g, currentResult)
+        currentResult = evaluatePostfix(infixToPostfix(processExpression(processedInput)))
+        if (!currentResult) return ``
+        resultField.textContent = currentResult
+        isResultPresent = true
+        break;
+      default:
+        switch (btn.textContent) {
+          case '.':
+            let currentInputArr = (input.value).split(/([-+x/()])/g)
+            console.log('adrian', currentInputArr)
+            if (currentInputArr[currentInputArr.length - 1].includes('.')) return
+            break
+          case '+':
+          case '-':
+          case '/':
+          case 'x':
+            if (isResultPresent) {
+              input.value = "ans"
+              isResultPresent = false
+            }
+            if (isAnOperator(input.value[input.value.length - 1])) return
+            if (input.value.length == 0) return;
+        }
+        if (isAnOperator(btn.textContent)) {
+          input.value = input.value + ` ${btn.textContent} `
+        } else {
+          input.value = input.value + `${btn.textContent}`
+        }
+    }
+  })
+})
