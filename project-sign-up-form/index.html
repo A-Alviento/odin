@@ -4,6 +4,7 @@
   <head>
     <meta charset="utf-8" />
     <title>Project Signup Form</title>
+    <link rel="stylesheet" href="reset.css" />
     <link rel="stylesheet" href="styles.css" />
     <script src="script.js" defer></script>
   </head>
@@ -15,6 +16,15 @@
           <img id="odin-logo" src="./assets/odin-lined.png" alt="odin logo" />
           <span id="odin-text">ODIN</span>
         </div>
+        <div id="reference">
+          <div>
+            Photo by
+            <a
+              href="https://www.uhdpaper.com/2022/10/mountain-lake-reflection-nature-4k-3850h.html?m=1"
+              >UHD Wallpaper</a
+            >
+          </div>
+        </div>
       </div>
       <div id="content">
         <div id="header">
@@ -22,9 +32,7 @@
             <p>
               Lorem ipsum, dolor sit amet consectetur adipisicing elit. Omnis
               incidunt nobis provident possimus corporis. Quibusdam minima
-              dignissimos, placeat tenetur laboriosam pariatur, quos
-              voluptatibus nam praesentium nostrum eligendi consectetur
-              exercitationem voluptatem.
+              dignissimos, placeat tenetur laboriosam pariatur.
             </p>
             <p>Lorem ipsum, dolor sit amet</p>
           </div>
@@ -53,6 +61,7 @@
               <div>
                 <label for="pw">PASSWORD</label>
                 <input type="password" id="pw" />
+                <div id="pw-requirements"></div>
               </div>
               <div>
                 <label for="confirm_pw">CONFIRM PASSWORD</label>
