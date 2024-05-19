@@ -4,7 +4,7 @@ const myLibrary = [
     author: "Fredrik Backman",
     title: "Bear Town",
     description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Id animiexcepturi ipsam sit ipsum dolorum iure nobis doloremque dolor expeditadignissimos quaerat totam labore, aspernatur delectus consequatur, porro similique neque.",
+      "A dazzling, profound novel about a small town with a big dream—and the price required to make it come true. <br> People say Beartown is finished. A tiny community nestled deep in the forest, it is slowly losing ground to the ever encroaching trees. But down by the lake stands an old ice rink, built generations ago by the working men who founded this town. And in that ice rink is the reason people in Beartown believe tomorrow will be better than today. Their junior ice hockey team is about to compete in the national semi-finals, and they actually have a shot at winning. All the hopes and dreams of this place now rest on the shoulders of a handful of teenage boys. <br> Being responsible for the hopes of an entire town is a heavy burden, and the semi-final match is the catalyst for a violent act that will leave a young girl traumatized and a town in turmoil. Accusations are made and, like ripples on a pond, they travel through all of Beartown, leaving no resident unaffected. <br> Beartown explores the hopes that bring a small community together, the secrets that tear it apart, and the courage it takes for an individual to go against the grain. In this story of a small forest town, Fredrik Backman has found the entire world.",
     read: false,
     coverSrc:
       "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1482108618i/33413128.jpg",
@@ -38,7 +38,7 @@ function renderLibrary() {
     title.textContent = `${item.title} by ${item.author}`;
     const description = document.createElement("div");
     description.classList.add("description");
-    description.textContent = item.description;
+    description.innerHTML = item.description;
 
     const read = document.createElement("button");
     read.classList.add("read");
@@ -89,7 +89,8 @@ document.getElementById("form").addEventListener("submit", (event) => {
   const author = document.getElementById("author");
   const authorValue = author.value;
   const desc = document.getElementById("desc");
-  const descValue = desc.value;
+  let descValue = desc.value;
+  descValue = descValue.replace(/\n/g, "<br>");
   const coverSrc = document.getElementById("coverSrc");
   const coverSrcValue = coverSrc.value;
 
@@ -98,14 +99,14 @@ document.getElementById("form").addEventListener("submit", (event) => {
     if (!authorValue) author.style.borderColor = "red";
     if (!descValue) desc.style.borderColor = "red";
     if (!coverSrcValue) coverSrc.style.borderColor = "red";
-
+    
     return;
   }
 
   addBookToLibrary(authorValue, titleValue, descValue, false, coverSrcValue);
 });
 
-document.querySelectorAll("input").forEach((element) => {
+document.querySelectorAll(".input").forEach((element) => {
   element.addEventListener("blur", () => {
     if (!element.value.trim()) {
       element.style.borderColor = "red";
