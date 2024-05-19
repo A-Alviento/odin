@@ -1,0 +1,139 @@
+/* helper borders */
+/* #sidebar,
+#books {
+  border: 1px solid red;
+} */
+
+/* .cover,
+.title,
+.author,
+.description {
+  border: 1px solid blue;
+} */
+
+/* start */
+* {
+  font-family: Arial, Helvetica, sans-serif;
+
+  --font-size-small: 0.75rem;
+  --font-size-large: 1.75rem;
+
+  --radius-card: 8px;
+  --radius-book: 16px;
+
+  --gap-small: 0.5rem;
+  --gap-medium: 1rem;
+  --gap-large: 2rem;
+
+  --book-shadow: 10px 10px 8px 0px rgba(0, 0, 0, 0.75);
+
+  --sidebar-colour: #01161e;
+  --button-positive: #368166;
+  --button-negative: #ee6352;
+  --card-unread: #f1f9f6;
+}
+
+body {
+  display: grid;
+  grid-template-columns: 20rem 1fr;
+  grid-template-rows: auto;
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* sidebar */
+#logo {
+  font-size: var(--font-size-large);
+  font-weight: bold;
+}
+
+#sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-small);
+  padding: var(--gap-small);
+  background-color: var(--sidebar-colour);
+  color: white;
+}
+
+form {
+  display: grid;
+}
+
+input {
+  margin-bottom: var(--gap-small);
+  border-radius: var(--radius-card);
+  border-color: transparent;
+}
+
+#coverSrc {
+  margin-bottom: var(--gap-large);
+}
+
+#add {
+  padding: 0.25rem;
+  background-color: var(--button-positive);
+  color: white;
+}
+
+/* books */
+
+#books {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 17rem);
+  grid-auto-rows: auto;
+  gap: var(--gap-medium);
+  padding: var(--gap-medium);
+}
+
+.title {
+  font-weight: bold;
+  text-align: center;
+}
+
+.description {
+  font-size: var(--font-size-small);
+}
+
+.book-card {
+  display: grid;
+  height: min-content;
+  grid-template-rows: 19.5rem auto auto 2rem;
+  padding: 1rem 2rem 1rem 2rem;
+  border-radius: var(--radius-card);
+  gap: var(--gap-small);
+  background-color: var(--card-unread);
+  box-shadow: var(--book-shadow);
+}
+
+.cover {
+  border-radius: 0 var(--radius-book) var(--radius-book) 0;
+  box-shadow: var(--book-shadow);
+}
+
+.options {
+  display: flex;
+  justify-content: end;
+  gap: var(--gap-small);
+}
+
+button {
+  border-radius: var(--radius-card);
+  border: 0px;
+  transition: transform 0.3s ease;
+  box-shadow: 4px 4px 8px 0px rgba(0, 0, 0, 0.5);
+}
+
+button:active {
+  transform: scale(0.9);
+}
+
+.read {
+  background-color: var(--button-positive);
+  color: white;
+}
+
+.remove {
+  background-color: var(--button-negative);
+  color: white;
+}
