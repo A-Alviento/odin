@@ -1,0 +1,50 @@
+/* helper outlines */
+#header,
+#main-body {
+  border: 1px solid red;
+}
+
+#board-wrapper {
+  border: 1px solid green;
+}
+
+#board {
+  border: 1px solid purple;
+}
+
+.cell {
+  border: 1px solid blue;
+}
+
+/* start */
+body {
+  display: grid;
+  width: 100%;
+  height: 100vh;
+  grid-template-rows: 4rem 1fr;
+}
+
+/* main-body */
+#main-body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#board-wrapper {
+  width: 50%;
+  padding-bottom: 50%;
+  position: relative;
+}
+
+#board {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+}
+
+.cell {
+}
