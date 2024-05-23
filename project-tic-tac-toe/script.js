@@ -131,9 +131,23 @@ const PlayGame = () => {
   }
 };
 
-// const testBoard = Gameboard();
-// testBoard.setCell(1, [0, 0]);
-// testBoard.setCell(2, [0, 1]);
-// testBoard.printBoard();
+//PlayGame();
 
-PlayGame();
+let isXTurn = false;
+let token;
+const uiCells = document.querySelectorAll(".cell");
+
+const board = Gameboard();
+
+uiCells.forEach((cell, idx) => {
+  cell.addEventListener("click", () => {
+    token = isXTurn ? TOKEN_MAP[1] : TOKEN_MAP[2];
+    cell.textContent = token;
+    isXTurn = !isXTurn;
+    board.setCell(isXTurn ? 1 : 2, [Math.floor((idx + 1) / 3), (idx + 1) % 3]);
+    const result = board.checkCondition();
+    if (result === 1 || result === 2) {
+      console.log(BOARD_CONDITION[result]);
+    }
+  });
+});
