@@ -16,7 +16,7 @@ const Gameboard = () => {
   const winningStreak = 3;
   const board = [];
 
-  // create the board
+  // create board and checkBoard
   for (let i = 0; i < rows; i++) {
     board[i] = [];
     for (let j = 0; j < cols; j++) {
@@ -26,74 +26,60 @@ const Gameboard = () => {
 
   const getBoard = () => board;
 
-  const setCell = (token, coord) => board[coord[0]][coord[1]].setValue(token);
+  const hasContiguousToken = (arr) => {
+    let streak = 1;
 
-  const printBoard = () => {
-    let outputString = "";
-
-    for (let i = 0; i < rows; i++) {
-      for (let j = 0; j < cols; j++) {
-        let token = board[i][j].getValue();
-        outputString += " " + TOKEN_MAP[token] + " |";
+    for (let i = 1; i < arr.length; i++) {
+      if (arr[i] === arr[i - 1]) {
+        streak++;
+        if (streak === winningStreak) return true;
+      } else {
+        streak = 1;
       }
-      outputString += "\n";
-    }
-
-    console.log(outputString);
-  };
-
-  const flattenBoard = () => {
-    const flattenedBoard = [];
-
-    for (let i = 0; i < rows; i++) {
-      for (let j = 0; j < cols; j++) {
-        flattenedBoard.push(board[i][j].getValue());
-      }
-    }
-
-    return flattenedBoard;
-  };
-
-  const hasContiguouseElements = (array, n) => {
-    let count = 1;
-    for (let i = 0; i < array.length - 1; i++) {
-      if (array[i] === array[i + 1]) count++;
-      if (array[i] !== array[i + 1]) count = 1;
-      if (count === n) return true;
     }
 
     return false;
   };
 
-  const checkCondition = () => {
-    flattenedBoard = flattenBoard();
-    const xIdxArr = [];
-    const oIdxArr = [];
+  const checkCondition = (row, col) => {
+    checkArr = [];
 
-    flattenedBoard.forEach((item, idx) => {
-      if (item === 1) {
-        xIdxArr.push(idx);
-      } else if (item === 2) {
-        oIdxArr.push(idx);
-      }
-    });
+    // vertical check
+    for (let i = 0; i < rows; i++) {
+      checkArr.push(board[i][col].getValue());
+    }
+    if (hasContiguousToken(checkArr)) return true;
+    checkArr = [];
 
-    const xSepCount = [];
-    const oSepCount = [];
+    //horizontal check
+    for (let i = 0; i < cols; i++) {
+      checkArr.push(board[row][i].getValue());
+    }
+    if (hasContiguousToken(checkArr)) return true;
+    checkArr = [];
 
-    /* get the array representing how many cells each consecutive 
-    tokens are separated by */
-    for (let i = 0; i < xIdxArr.length - 1; i++)
-      xSepCount.push(xIdxArr[i + 1] - xIdxArr[i] - 1);
-    for (let i = 0; i < oIdxArr.length - 1; i++)
-      oSepCount.push(oIdxArr[i + 1] - oIdxArr[i]);
+    while (row > 0 && col > 0) {
+      row--;
+      col--;
+    }
+    while (row < rows && col < cols) {
+      checkArr.push(board[row++][col++].getValue());
+    }
+    if (hasContiguousToken(checkArr)) return true;
 
-    if (hasContiguouseElements(xSepCount, winningStreak - 1)) return 1;
-    if (hasContiguouseElements(oSepCount, winningStreak - 1)) return 2;
+    return false;
+  };
+
+  const setCell = (token, coord) => {
+    const row = coord[0];
+    const col = coord[1];
+
+    board[row][col].setValue(token);
+    if (checkCondition(row, col)) return token;
     return 0;
   };
 
-  return { getBoard, setCell, printBoard, checkCondition };
+  return { getBoard, setCell };
 };
 
 const Cell = () => {
@@ -111,28 +97,6 @@ const Cell = () => {
   };
 };
 
-const PlayGame = () => {
-  let isXTurn = false;
-  const board = Gameboard();
-
-  while (true) {
-    const row = Number(prompt("Coordinate_Row: "));
-    const col = Number(prompt("Coordinate_Col"));
-
-    board.setCell(isXTurn ? 1 : 2, [row, col]);
-    isXTurn = !isXTurn;
-    board.printBoard();
-    const result = board.checkCondition();
-
-    if (result === 1 || result === 2) {
-      console.log(BOARD_CONDITION[result]);
-      break;
-    }
-  }
-};
-
-//PlayGame();
-
 let isXTurn = false;
 let token;
 const uiCells = document.querySelectorAll(".cell");
@@ -143,11 +107,13 @@ uiCells.forEach((cell, idx) => {
   cell.addEventListener("click", () => {
     token = isXTurn ? TOKEN_MAP[1] : TOKEN_MAP[2];
     cell.textContent = token;
-    board.setCell(isXTurn ? 1 : 2, [Math.floor((idx + 1) / 3), (idx + 1) % 3]);
+
+    const result = board.setCell(isXTurn ? 1 : 2, [
+      Math.floor(idx / 3),
+      idx % 3,
+    ]);
     isXTurn = !isXTurn;
-    const result = board.checkCondition();
     if (result === 1 || result === 2) {
-      console.log(BOARD_CONDITION[result]);
       setTimeout(() => {
         alert(BOARD_CONDITION[result]);
       }, 0);
