@@ -10,27 +10,36 @@ const BOARD_CONDITION = {
   2: "O wins",
 };
 
-const Gameboard = () => {
-  const rows = 3;
-  const cols = 3;
-  const winningStreak = 3;
+const Gameboard = (dimension, winningStreak) => {
+  const rows = dimension;
+  const cols = dimension;
   const board = [];
+
+  const uiBoard = document.querySelector("#board");
+  uiBoard.style.gridTemplateColumns = `repeat(${dimension}, 1fr)`;
+  uiBoard.style.gridTemplateRows = `repeat(${dimension}, 1fr)`;
 
   // create board and checkBoard
   for (let i = 0; i < rows; i++) {
     board[i] = [];
     for (let j = 0; j < cols; j++) {
+      //ui
+      const uiCell = document.createElement("button");
+      uiCell.classList.add("cell");
+      uiCell.dataset.row = i;
+      uiCell.dataset.col = j;
+      uiBoard.appendChild(uiCell);
+
+      //logic
       board[i].push(Cell());
     }
   }
-
-  const getBoard = () => board;
 
   const hasContiguousToken = (arr) => {
     let streak = 1;
 
     for (let i = 1; i < arr.length; i++) {
-      if (arr[i] === arr[i - 1]) {
+      if (arr[i] === arr[i - 1] && arr[i] != 0) {
         streak++;
         if (streak === winningStreak) return true;
       } else {
@@ -55,8 +64,12 @@ const Gameboard = () => {
     for (let i = 0; i < cols; i++) {
       checkArr.push(board[row][i].getValue());
     }
+    console.log(checkArr);
     if (hasContiguousToken(checkArr)) return true;
     checkArr = [];
+
+    rowCopy = row;
+    colCopy = col;
 
     while (row > 0 && col > 0) {
       row--;
@@ -66,20 +79,43 @@ const Gameboard = () => {
       checkArr.push(board[row++][col++].getValue());
     }
     if (hasContiguousToken(checkArr)) return true;
+    checkArr = [];
+
+    row = rowCopy;
+    col = colCopy;
+
+    while (row < rows - 1 && col > 0) {
+      row++;
+      col--;
+    }
+    while (row >= 0 && col < cols) {
+      checkArr.push(board[row--][col++].getValue());
+    }
+    if (hasContiguousToken(checkArr)) return true;
 
     return false;
   };
 
-  const setCell = (token, coord) => {
-    const row = coord[0];
-    const col = coord[1];
+  const getCell = (row, col) => board[row][col].getValue();
 
+  const setCell = (token, row, col) => {
     board[row][col].setValue(token);
-    if (checkCondition(row, col)) return token;
-    return 0;
+    return checkCondition(row, col);
   };
 
-  return { getBoard, setCell };
+  const clearBoard = () => {
+    for (let i = 0; i < rows; i++) {
+      for (let j = 0; j < cols; j++) {
+        board[i][j].setValue(0);
+        const uiBtn = document.querySelector(
+          `button[data-row='${i}'][data-col='${j}']`
+        );
+        uiBtn.textContent = "";
+      }
+    }
+  };
+
+  return { getCell, setCell, clearBoard };
 };
 
 const Cell = () => {
@@ -97,26 +133,31 @@ const Cell = () => {
   };
 };
 
+/* initialise game */
+const dimension = 10;
+const winningStreak = 5;
+const board = Gameboard(dimension, winningStreak);
+
 let isXTurn = false;
 let token;
 const uiCells = document.querySelectorAll(".cell");
 
-const board = Gameboard();
-
 uiCells.forEach((cell, idx) => {
   cell.addEventListener("click", () => {
-    token = isXTurn ? TOKEN_MAP[1] : TOKEN_MAP[2];
-    cell.textContent = token;
+    token = isXTurn ? 1 : 2;
+    row = cell.dataset.row;
+    col = cell.dataset.col;
 
-    const result = board.setCell(isXTurn ? 1 : 2, [
-      Math.floor(idx / 3),
-      idx % 3,
-    ]);
+    if (board.getCell(row, col) !== 0) return;
+
+    cell.textContent = TOKEN_MAP[token];
+    const result = board.setCell(token, row, col);
     isXTurn = !isXTurn;
-    if (result === 1 || result === 2) {
+    if (result) {
       setTimeout(() => {
-        alert(BOARD_CONDITION[result]);
-      }, 0);
+        alert(BOARD_CONDITION[token]);
+        board.clearBoard();
+      }, 100);
     }
   });
 });
