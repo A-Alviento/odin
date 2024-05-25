@@ -143,11 +143,14 @@ uiCells.forEach((cell, idx) => {
   cell.addEventListener("click", () => {
     token = isXTurn ? TOKEN_MAP[1] : TOKEN_MAP[2];
     cell.textContent = token;
-    isXTurn = !isXTurn;
     board.setCell(isXTurn ? 1 : 2, [Math.floor((idx + 1) / 3), (idx + 1) % 3]);
+    isXTurn = !isXTurn;
     const result = board.checkCondition();
     if (result === 1 || result === 2) {
       console.log(BOARD_CONDITION[result]);
+      setTimeout(() => {
+        alert(BOARD_CONDITION[result]);
+      }, 0);
     }
   });
 });
