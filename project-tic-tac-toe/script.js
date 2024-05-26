@@ -134,7 +134,7 @@ const Cell = () => {
 };
 
 /* initialise game */
-const dimension = 10;
+const dimension = 7;
 const winningStreak = 5;
 const board = Gameboard(dimension, winningStreak);
 
