@@ -1,11 +1,5 @@
 import _ from "lodash";
 import "./style.css";
-import Icon from "./icon.jpeg";
-import Data from "./data.csv";
-import Notes from "./data.xml";
-import toml from "./data.toml";
-import yaml from "./data.yaml";
-import json from "./data.json5";
 import printMe from "./print";
 
 // console.log(toml.title); // output `TOML Example`
