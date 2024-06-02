@@ -1,21 +1,32 @@
 /* helper borders */
-header,
-#content {
-  border: 1px solid red;
-}
-
-.info {
+/* .info {
   border: 1px solid blue;
-}
+} */
 
-#content-wrapper {
+/* #content-wrapper {
   border: 1px solid purple;
-}
+} */
 
 * {
-  --gap-med: 2rem;
   scrollbar-width: thin; /* "auto" or "thin"  */
   scrollbar-color: #88888826 transparent; /* thumb and track color */
+
+  --gap-med: 2rem;
+  --gap-large: 4rem;
+  --gap-x-large: 8rem;
+
+  --border-radius-small: 4px;
+  --border-radius-medium: 8px;
+  --border-radius-large: 16px;
+
+  --button-padding-y: 0.5rem;
+  --button-padding-x: 1rem;
+
+  --box-shadow-btn: 2px 2px 5px 0px rgba(0, 0, 0, 0.75);
+  --box-shadow-card: 0px 0px 16px 0px rgba(0, 0, 0, 0.75);
+
+  --background-colour: #d4d8d4;
+  --card-colour: #c9cfc9;
 }
 
 /* start */
@@ -24,19 +35,37 @@ body {
   height: 100vh;
   padding: 1rem;
   display: grid;
-  grid-template-rows: 3.5rem 1fr;
-  gap: var(--gap-med)
+  grid-template-rows: 4.5rem 1fr;
+  gap: var(--gap-med);
+  background-color: var(--background-colour);
 }
 
 header {
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: var(--card-colour);
+  border-radius: var(--border-radius-medium);
+  box-shadow: var(--box-shadow-card);
 }
 
 nav {
   display: flex;
-  gap: var(--gap-med);
+  gap: var(--gap-x-large);
+}
+
+nav button {
+  padding: var(--button-padding-y) var(--button-padding-x);
+  border-radius: var(--border-radius-medium);
+  border: 0px;
+  box-shadow: var(--box-shadow-btn);
+  transition: transform 0.3s ease;
+  font-style: italic;
+  background-color: var(--background-colour);
+}
+
+nav button:active {
+  transform: scale(0.9);
 }
 
 #content {
@@ -44,6 +73,10 @@ nav {
   justify-content: center;
   padding: var(--gap-med);
   overflow-y: auto;
+  background-color: var(--card-colour);
+  border-radius: var(--border-radius-medium);
+  box-shadow: var(--box-shadow-card);
+  font-style: italic;
 }
 
 #content-wrapper {
@@ -51,14 +84,16 @@ nav {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 2rem;
-  width: 80%;
+
+  width: 60%;
   height: fit-content;
 }
 
 .info {
-  width: 80%;
-  padding: var(--gap-med)
+  width: 70%;
+  padding: var(--gap-med);
+  text-align: center;
+  border-bottom: 1px solid black;
 }
 
 #title {
@@ -66,4 +101,3 @@ nav {
   font-size: 4rem;
   padding: 0;
 }
-
