@@ -1,0 +1,74 @@
+/* helper borders */
+body {
+  border: 1px solid red;
+}
+
+#wrapper {
+  border: 1px solid blue;
+}
+
+#toggle,
+#content {
+  border: 1px solid purple;
+}
+
+#calendar-toggle,
+#calendar,
+#reminder {
+  border: 1px solid green;
+}
+
+.day {
+  border: 1px solid yellow;
+}
+
+* {
+  --gap-xxs: 0.5rem;
+  --gap-xs: 1rem;
+  --gap-s: 2rem;
+}
+
+/* start */
+body {
+  width: 100%;
+  height: 100vh;
+}
+
+#wrapper {
+  width: 100%;
+  height: 100%;
+
+  display: grid;
+  grid-template-columns: 6rem 1fr;
+  gap: var(--gap-xs);
+
+  padding: var(--gap-xs);
+}
+
+#toggle {
+  padding: var(--gap-xxs);
+}
+
+/* todo mode */
+#content {
+  display: grid;
+  grid-template-rows: 3rem 1fr;
+  grid-template-columns: 1fr 12rem;
+  gap: var(--gap-xxs);
+  padding: var(--gap-xxs);
+}
+
+#calendar-toggle {
+  grid-column: 1 / 3;
+}
+
+#calendar {
+  display: grid;
+  grid-template-columns: 3rem 1fr;
+}
+
+#days {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(16rem, 1fr));
+  overflow-y: auto;
+}
