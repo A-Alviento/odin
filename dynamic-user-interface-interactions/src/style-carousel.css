@@ -1,0 +1,41 @@
+/* helper border */
+.carousel-wrapper {
+  border: 1px solid red;
+}
+
+.prev,
+.img-container,
+.next,
+.pagination {
+  border: 2px solid green;
+}
+
+/* start */
+.carousel-wrapper {
+  min-width: 32rem;
+  width: 70%;
+
+  display: grid;
+  grid-template-columns: 24px 1fr 24px;
+  grid-template-rows: 240px 24px;
+
+  align-items: center;
+  justify-content: center;
+}
+
+.prev,
+.next {
+  width: 24px;
+  height: 24px;
+  border-radius: 100%;
+}
+
+.img-container {
+  width: 100%;
+  height: 240px;
+}
+
+.pagination {
+  grid-column: 2;
+  height: 24px;
+}
