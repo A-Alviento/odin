@@ -46,6 +46,18 @@ const btnLogic = (carousel, carouselWrapper) => {
       pagination.childNodes[carousel.getCurSlide()].classList.add("active");
     });
   });
+
+  // auto slide logic
+  setInterval(() => {
+    pagination.childNodes[carousel.getCurSlide()].classList.remove("active");
+
+    carousel.nextSlide();
+
+    imgContainer.style.backgroundImage = `url(${
+      slides[carousel.getCurSlide()]
+    })`;
+    pagination.childNodes[carousel.getCurSlide()].classList.add("active");
+  }, 5000);
 };
 
 const createCarouselUI = () => {
