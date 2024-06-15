@@ -19,10 +19,21 @@ body {
 }
 
 .day {
-  border: 1px solid yellow;
+  border: 1px solid orange;
+}
+
+#time {
+  border: 1px solid black;
+}
+
+.time-block {
+  border: 1px solid red;
 }
 
 * {
+  scrollbar-width: thin; /* "auto" or "thin"  */
+  scrollbar-color: #88888826 transparent; /* thumb and track color */
+
   --gap-xxs: 0.5rem;
   --gap-xs: 1rem;
   --gap-s: 2rem;
@@ -52,10 +63,13 @@ body {
 /* todo mode */
 #content {
   display: grid;
+
   grid-template-rows: 3rem 1fr;
-  grid-template-columns: 1fr 12rem;
+  grid-template-columns: minmax(24rem, 1fr) 12rem;
   gap: var(--gap-xxs);
   padding: var(--gap-xxs);
+
+  overflow: hidden;
 }
 
 #calendar-toggle {
@@ -64,11 +78,47 @@ body {
 
 #calendar {
   display: grid;
+  grid-template-rows: 2rem 1fr;
   grid-template-columns: 3rem 1fr;
+
+  overflow: auto;
+  position: relative;
+}
+
+#labels {
+  grid-column: 1 / 3;
+
+  position: sticky;
+  top: 0; /* Position it at the top when scrolling */
+  z-index: 10; /* Ensure it appears above other elements */
+  background-color: white;
+
+  display: grid;
+  grid-template-columns: 3rem 1fr;
+}
+
+#time-label {
+  position: sticky;
+  left: 0;
+  background-color: white;
+}
+
+#day-label-wrapper {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(16rem, 1fr));
+}
+
+#time {
+  position: sticky;
+  left: 0;
+  background-color: white;
 }
 
 #days {
   display: grid;
   grid-template-columns: repeat(7, minmax(16rem, 1fr));
-  overflow-y: auto;
+}
+
+.time-block {
+  height: 4rem;
 }
