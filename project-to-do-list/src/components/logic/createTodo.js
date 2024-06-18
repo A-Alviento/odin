@@ -24,5 +24,13 @@ export const createTodo = ({
     done,
   });
 
+  // initialise todoArr in localstorage
+  if (!localStorage.getItem("todo"))
+    localStorage.setItem("todo", JSON.stringify([]));
+  const todoArr = JSON.parse(localStorage.getItem("todo"));
+
+  todoArr.push(newTodo);
+  localStorage.setItem("todo", JSON.stringify(todoArr));
+
   return newTodo;
 };
