@@ -1,0 +1,15 @@
+.invalid {
+  border: 1px solid red;
+}
+
+.invalid:focus {
+  outline: 1px solid red;
+}
+
+form {
+  display: grid;
+}
+
+.validation-message {
+  color: red;
+}

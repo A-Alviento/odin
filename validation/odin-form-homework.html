@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Form validation Odin Homework</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="./script.js" defer></script>
+  </head>
+
+  <body>
+    <form>
+      <label for="mail">Email:</label>
+      <div class="validation-message" id="mail-validation-message"></div>
+      <input type="text" id="mail" />
+
+      <label for="country">Country:</label>
+      <input type="text" id="country" />
+
+      <label for="postal">Postal Code:</label>
+      <div class="validation-message" id="postal-validation-message"></div>
+      <input type="number" id="postal" />
+
+      <label for="password">Password:</label>
+      <div class="validation-message" id="password-validation-message"></div>
+      <input type="password" id="password" />
+
+      <label for="confirm-password">Confirm Password:</label>
+      <div class="validation-message" id="confirm-password-validation-message"></div>
+      <input type="password" id="confirm-password" />
+
+      <input type="submit" id="submit" />
+    </form>
+    <div class="validation-message" id="required-validation-message"></div>
+  </body>
+</html>
