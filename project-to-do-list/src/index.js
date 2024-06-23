@@ -7,7 +7,13 @@ import { format } from "date-fns";
 
 import { displayTodo } from "./components/ui/displayTodo";
 
-import { createTodoDialog } from "./components/ui/create-todo-dialog";
+import { todoDialog } from "./components/ui/todo-dialog";
+import {
+  onSubmit,
+  showDialog,
+  onCancel,
+} from "./components/ui/dom-logic/dialog";
+import { currentWeekDisplayed } from "./components/logic/currentWeekDisplayed";
 
 // const todo1 = createTodo({
 //   title: "Title 1",
@@ -42,11 +48,7 @@ import { createTodoDialog } from "./components/ui/create-todo-dialog";
 // console.log(format(new Date(), "HH:mm"));
 // console.log("hello");
 
-const content = displayTodo();
-
-const dialog = createTodoDialog();
-console.log(dialog);
+const { content, dialog } = displayTodo();
 
 const wrapper = document.querySelector("#wrapper");
 wrapper.append(content, dialog);
-dialog.showModal();

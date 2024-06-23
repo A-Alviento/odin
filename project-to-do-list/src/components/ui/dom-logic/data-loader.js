@@ -1,7 +1,16 @@
-import { TIME_LABELS } from "../common/constants";
+import { TIME_LABELS } from "../../common/constants";
 
-export const todoLoader = (days, currentWeekDisplayed) => {
+export const todoLoader = (currentWeekDisplayed) => {
+  const days = document.querySelector("#days");
   const todoArr = JSON.parse(localStorage.getItem("todo"));
+
+  if (!todoArr) return;
+  // clear current content
+  const dayArr = days.querySelectorAll(".day");
+  for (const day of dayArr) {
+    while (day.firstChild) day.removeChild(day.firstChild);
+  }
+
   todoArr.forEach((item) => {
     const { id, title, dueDate, timeStart, timeEnd, done } = item;
 

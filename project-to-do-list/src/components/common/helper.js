@@ -44,3 +44,10 @@ export const getNextWeekArr = (week) => {
   });
   return newWeek;
 };
+
+export const parseDate = (date, currentFormat) => {
+  if (!date) return "";
+
+  const formatDate = parse(date, currentFormat, new Date());
+  return format(formatDate, DATE_FORMAT);
+};
