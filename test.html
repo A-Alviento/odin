@@ -2,23 +2,28 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="test.css" />
-    <script src="test.js" defer></script>
   </head>
 
   <body>
-    <form novalidate>
-      <p>
-        <label for="mail">
-          <span>Please enter an email address:</span>
-          <input type="email" id="mail" name="mail" required minlength="8" />
-          <span class="error" aria-live="polite"></span>
-        </label>
-      </p>
-      <button>Submit</button>
-    </form>
-    
+    <img src="#" alt="hi" />
+    <script>
+      const asyncFunction = () => {
+        return new Promise((res, rej) => {
+          setTimeout(() => {
+            res("hi");
+          }, 1000);
+        });
+      };
+
+      const test = async () => {
+        console.log('hey');
+        const result = await asyncFunction();
+        console.log(result);
+      };
+
+      test();
+      console.log('what')
+    </script>
   </body>
 </html>
