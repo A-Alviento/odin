@@ -1,7 +1,6 @@
 import { TIME_LABELS } from "../../common/constants";
 
-export const todoLoader = (currentWeekDisplayed) => {
-  const days = document.querySelector("#days");
+export const todoLoader = (currentWeekDisplayed, days) => {
   const todoArr = JSON.parse(localStorage.getItem("todo"));
 
   if (!todoArr) return;

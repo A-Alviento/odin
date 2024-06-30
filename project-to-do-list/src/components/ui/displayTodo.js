@@ -67,7 +67,7 @@ export const displayTodo = () => {
     calendar.removeChild(curDays);
     calendar.prepend(newlabels);
     calendar.append(newDays);
-    todoLoader(weekToDisplay.getCurrentWeek());
+    todoLoader(weekToDisplay.getCurrentWeek(), newDays);
   });
 
   nextBtn.addEventListener("click", () => {
@@ -82,12 +82,14 @@ export const displayTodo = () => {
     calendar.removeChild(curDays);
     calendar.prepend(newlabels);
     calendar.append(newDays);
-    todoLoader(weekToDisplay.getCurrentWeek());
+    todoLoader(weekToDisplay.getCurrentWeek(), newDays);
   });
 
   // reminder (TODO)
 
-  todoLoader(weekToDisplay.getCurrentWeek());
+  console.log(content);
+
+  todoLoader(weekToDisplay.getCurrentWeek(), days);
 
   return { content, dialog };
 };

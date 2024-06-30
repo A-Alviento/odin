@@ -1,4 +1,4 @@
-import { DAY_LABELS, TIME_LABELS } from "../common/constants";
+import { DAY_LABELS } from "../common/constants";
 
 export const daysUI = (week) => {
   const days = document.createElement("div");
@@ -9,14 +9,6 @@ export const daysUI = (week) => {
     dayBlock.id = day.toLowerCase();
     dayBlock.classList.add("day");
     dayBlock.setAttribute("date-data", week[DAY_LABELS.indexOf(day)]);
-
-    // TIME_LABELS.forEach((timeLabel) => {
-    //   const timeBlock = document.createElement("div");
-    //   timeBlock.classList.add("time-block");
-    //   timeBlock.setAttribute("time-data", timeLabel);
-
-    //   dayBlock.append(timeBlock);
-    // });
 
     days.append(dayBlock);
   });

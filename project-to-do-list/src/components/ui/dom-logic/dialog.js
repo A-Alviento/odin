@@ -36,7 +36,7 @@ export const onSubmit = (dialog, days, weekToDisplay) => {
       timeEnd: timeEnd.value,
     });
 
-    todoLoader(weekToDisplay.getCurrentWeek());
+    todoLoader(weekToDisplay.getCurrentWeek(), days);
     dialog.close();
   });
 };
