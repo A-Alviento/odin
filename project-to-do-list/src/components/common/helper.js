@@ -51,3 +51,18 @@ export const parseDate = (date, currentFormat) => {
   const formatDate = parse(date, currentFormat, new Date());
   return format(formatDate, DATE_FORMAT);
 };
+
+export const createElement = ({ el, id, classes, attribute, textContent }) => {
+  const element = document.createElement(`${el}`);
+
+  if (id) element.id = id;
+  if (classes && classes.length > 0) {
+    className.forEach((item) => element.classList.add(item));
+  }
+  if (attribute && attribute.length > 0) {
+    attribute.forEach((item) => element.setAttribute(item[0], item[1]));
+  }
+  if (textContent) element.textContent = textContent;
+
+  return element;
+};

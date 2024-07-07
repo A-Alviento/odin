@@ -1,95 +1,114 @@
 import { labelsUI } from "./labels-ui";
 import { timeUI } from "./time-ui";
 import { daysUI } from "./days-ui";
-import { todoLoader } from "./dom-logic/data-loader";
+import { todoLoader } from "../logic/data-loader";
 import { todoDialog } from "./todo-dialog";
-import { onSubmit, showDialog, onCancel } from "./dom-logic/dialog";
+import { onSubmit, showDialog, onCancel } from "../logic/dialog";
 import { currentWeekDisplayed } from "../logic/currentWeekDisplayed";
+import { createElement } from "../common/helper";
 
 export const displayTodo = () => {
-  const weekToDisplay = currentWeekDisplayed();
+  const weekToDisplay = currentWeekDisplayed("week");
+  let monthToDisplay;
 
-  // wrappers
-  const content = document.createElement("div");
-  content.id = "content";
-  const calendarToggle = document.createElement("div");
-  calendarToggle.id = "calendar-toggle";
-  const calendar = document.createElement("div");
-  calendar.id = "calendar";
-  const reminder = document.createElement("div");
-  reminder.id = "reminder";
+  const intervalToDisplay = weekToDisplay;
+
+  // ********** wrappers ********** //
+  const content = createElement({
+    el: "div",
+    id: "content",
+  });
+
+  const calendarToggle = createElement({
+    el: "div",
+    id: "calendar-toggle",
+  });
+  const calendar = createElement({
+    el: "div",
+    id: "calendar",
+    attribute: [["week-displayed", intervalToDisplay.getCurrentWeek()]],
+  });
+  const reminder = createElement({
+    id: "reminder",
+  });
+
   content.append(calendarToggle, calendar, reminder);
 
-  // calendarToggle
-  const weekBtn = document.createElement("button");
-  weekBtn.id = "week-btn";
-  weekBtn.textContent = "Week";
-  const monthBtn = document.createElement("button");
-  monthBtn.id = "month-btn";
-  monthBtn.textContent = "Month";
+  // ********** calendar view toggle ********** //
+  const weekBtn = createElement({
+    el: "button",
+    id: "week-btn",
+    textContent: "Week",
+  });
+  const monthBtn = createElement({
+    el: "button",
+    id: "month-btn",
+    textContent: "Month",
+  });
 
-  const prevBtn = document.createElement("button");
-  prevBtn.id = "prev";
-  prevBtn.textContent = "Previous";
-  const nextBtn = document.createElement("button");
-  nextBtn.id = "next";
-  nextBtn.textContent = "Next";
-
-  const newTodoBtn = document.createElement("button");
-  newTodoBtn.id = "new";
-  newTodoBtn.textContent = "New";
+  // ********** other buttons ********** //
+  const prevBtn = createElement({
+    el: "button",
+    id: "prev",
+    textContent: "Previous",
+  });
+  const nextBtn = createElement({
+    el: "button",
+    id: "next",
+    textContent: "Next",
+  });
+  const newTodoBtn = createElement({
+    el: "button",
+    id: "new",
+    textContent: "New",
+  });
 
   calendarToggle.append(weekBtn, monthBtn, prevBtn, nextBtn, newTodoBtn);
 
-  // calendar
-  const labels = labelsUI(weekToDisplay.getCurrentWeek());
+  // ********** calendar ********** //
+  const labels = labelsUI(intervalToDisplay.getCurrentWeek());
   const time = timeUI();
-  const days = daysUI(weekToDisplay.getCurrentWeek());
+  const days = daysUI(intervalToDisplay.getCurrentWeek());
+
   calendar.append(labels, time, days);
 
-  // dialog
+  // ********** dialog ********** //
   let dialog = todoDialog();
-
   // add dialog logic
-  onSubmit(dialog, content.querySelector("#days"), weekToDisplay);
+  onSubmit(dialog);
   onCancel(dialog);
   showDialog(newTodoBtn, dialog);
 
-  prevBtn.addEventListener("click", () => {
-    weekToDisplay.decrementWeek();
+  // ********** change weeks logic ********** //
+  changeIntervalDisplay(prevBtn, calendar, intervalToDisplay, "decrement");
+  changeIntervalDisplay(nextBtn, calendar, intervalToDisplay, "increment");
 
-    const curLabels = calendar.querySelector("#labels");
-    const curDays = calendar.querySelector("#days");
-    const newlabels = labelsUI(weekToDisplay.getCurrentWeek());
-    const newDays = daysUI(weekToDisplay.getCurrentWeek());
-
-    calendar.removeChild(curLabels);
-    calendar.removeChild(curDays);
-    calendar.prepend(newlabels);
-    calendar.append(newDays);
-    todoLoader(weekToDisplay.getCurrentWeek(), newDays);
-  });
-
-  nextBtn.addEventListener("click", () => {
-    weekToDisplay.incrementWeek();
-
-    const curLabels = calendar.querySelector("#labels");
-    const curDays = calendar.querySelector("#days");
-    const newlabels = labelsUI(weekToDisplay.getCurrentWeek());
-    const newDays = daysUI(weekToDisplay.getCurrentWeek());
-
-    calendar.removeChild(curLabels);
-    calendar.removeChild(curDays);
-    calendar.prepend(newlabels);
-    calendar.append(newDays);
-    todoLoader(weekToDisplay.getCurrentWeek(), newDays);
-  });
-
-  // reminder (TODO)
-
-  console.log(content);
-
-  todoLoader(weekToDisplay.getCurrentWeek(), days);
+  // ********** reminder (TODO) ********** //
 
   return { content, dialog };
+};
+
+const changeIntervalDisplay = (btn, calendar, intervalToDisplay, direction) => {
+  const eventFunction = () => {
+    direction === "increment"
+      ? intervalToDisplay.incrementWeek()
+      : intervalToDisplay.decrementWeek();
+
+    const curLabels = calendar.querySelector("#labels");
+    const curDays = calendar.querySelector("#days");
+    const newlabels = labelsUI(intervalToDisplay.getCurrentWeek());
+    const newDays = daysUI(intervalToDisplay.getCurrentWeek());
+
+    calendar.removeChild(curLabels);
+    calendar.removeChild(curDays);
+    calendar.prepend(newlabels);
+    calendar.append(newDays);
+    calendar.setAttribute("week-displayed", intervalToDisplay.getCurrentWeek());
+
+    todoLoader();
+  };
+
+  if (intervalToDisplay.mode === "week") {
+    btn.addEventListener("click", eventFunction);
+  }
 };

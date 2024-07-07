@@ -4,7 +4,7 @@ import {
   getPrevWeekArr,
 } from "../common/helper";
 
-export const currentWeekDisplayed = () => {
+export const currentWeekDisplayed = (mode) => {
   let currentWeek = getCurrentWeekArr();
 
   const getCurrentWeek = () => currentWeek;
@@ -19,5 +19,6 @@ export const currentWeekDisplayed = () => {
     getCurrentWeek,
     decrementWeek,
     incrementWeek,
+    mode,
   };
 };

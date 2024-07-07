@@ -1,7 +1,12 @@
-import { TIME_LABELS } from "../../common/constants";
+import { TIME_LABELS } from "../common/constants";
 
-export const todoLoader = (currentWeekDisplayed, days) => {
+export const todoLoader = () => {
   const todoArr = JSON.parse(localStorage.getItem("todo"));
+  const calendar = document.querySelector("#calendar");
+
+  const days = document.querySelector("#days");
+  const currentWeekDisplayedStr = calendar.getAttribute("week-displayed");
+  const currentWeekDisplayed = currentWeekDisplayedStr.split(",");
 
   if (!todoArr) return;
   // clear current content
@@ -12,7 +17,6 @@ export const todoLoader = (currentWeekDisplayed, days) => {
 
   todoArr.forEach((item) => {
     const { id, title, dueDate, timeStart, timeEnd, done } = item;
-
     if (!currentWeekDisplayed.includes(dueDate)) return;
 
     const timeStartIndex = TIME_LABELS.indexOf(timeStart);

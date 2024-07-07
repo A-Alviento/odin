@@ -1,10 +1,12 @@
 import { titleValidation } from "./form-validation";
-import { parseDate } from "../../common/helper";
+import { parseDate } from "../common/helper";
 import { todoLoader } from "./data-loader";
-import { createTodo } from "../../logic/createTodo";
+import { createTodo } from "./todo";
 
-export const onSubmit = (dialog, days, weekToDisplay) => {
+export const onSubmit = (dialog) => {
   const form = dialog.querySelector("form");
+  const submitBtn = form.querySelector("#todo-dialog-submit-btn");
+  const inputs = dialog.querySelectorAll(".input");
 
   const title = form.querySelector("#title");
   const titleValidationError = form.querySelector("#titleValidationError");
@@ -14,7 +16,7 @@ export const onSubmit = (dialog, days, weekToDisplay) => {
   const timeEnd = form.querySelector("#timeEnd");
   const category = form.querySelector("#cat");
 
-  form.addEventListener("submit", async (e) => {
+  submitBtn.addEventListener("submit", async (e) => {
     e.preventDefault();
 
     // validation
@@ -36,7 +38,12 @@ export const onSubmit = (dialog, days, weekToDisplay) => {
       timeEnd: timeEnd.value,
     });
 
-    todoLoader(weekToDisplay.getCurrentWeek(), days);
+    todoLoader();
+
+    inputs.forEach((input) => {
+      console.log("hi");
+      input.value = "";
+    });
     dialog.close();
   });
 };
@@ -44,6 +51,7 @@ export const onSubmit = (dialog, days, weekToDisplay) => {
 export const onCancel = (dialog) => {
   const btn = dialog.querySelector("#todo-dialog-cancel-btn");
   btn.addEventListener("click", () => {
+    console.log("hello");
     dialog.close();
   });
 };

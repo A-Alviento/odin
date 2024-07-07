@@ -41,6 +41,7 @@ export const todoDialog = () => {
     }
 
     input.id = DIALOG_OPTIONS[item];
+    input.classList.add("input");
 
     form.append(label, input);
     if (inputValidation) form.append(inputValidation);
